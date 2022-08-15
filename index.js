@@ -44,14 +44,3 @@ function invokeAction({ action, id, name, email, phone }) {
 }
 
 const result = invokeAction(argv);
-
-// npm run start:dev
-
-// node index.js --action list
-
-// node index.js --action get --id 6
-
-// node index.js --action remove --id D2f2Dz6Sv
-
-// node index.js --action add --name Mango --email mango@gmail.com --phone 322-22-22
-
