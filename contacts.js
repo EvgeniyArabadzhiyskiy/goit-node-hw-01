@@ -4,6 +4,10 @@ const shortid = require("shortid");
 
 const contactsPath = path.join(__dirname, "db/contacts.json");
 
+const updateContactFile = async (updateList) => {
+  fs.writeFile(contactsPath, JSON.stringify(updateList));
+};
+
 async function listContacts() {
   try {
     const contacts = await fs.readFile(contactsPath);
@@ -40,9 +44,7 @@ async function removeContact(contactId) {
       (contact) => contact.id !== contactId
     );
 
-    const updateContactList = JSON.stringify(deletedContactList);
-
-    await fs.writeFile(contactsPath, updateContactList);
+    await updateContactFile(deletedContactList);
 
     return deletedContact;
   } catch (error) {
@@ -63,9 +65,28 @@ async function addContact(name, email, phone) {
 
     const updateContactList = [...contacts, newContact];
 
-    await fs.writeFile(contactsPath, JSON.stringify(updateContactList));
+    await updateContactFile(updateContactList);
 
     return newContact;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function updateContact(contactId, name, phone) {
+  try {
+    const contacts = await listContacts();
+
+    const idx = contacts.findIndex((contact) => contact.id === contactId);
+    console.log("updateContact ~ idx", idx);
+
+    if (idx === -1) return null;
+
+    contacts[idx] = { ...contacts[idx], id: contactId, name, phone };
+
+    await updateContactFile(contacts);
+
+    return contacts[idx];
   } catch (error) {
     console.error(error);
   }
@@ -76,4 +97,5 @@ module.exports = {
   getContactById,
   removeContact,
   addContact,
+  updateContact,
 };

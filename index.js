@@ -6,6 +6,7 @@ const {
   getContactById,
   addContact,
   removeContact,
+  updateContact,
 } = require("./contacts");
 
 program
@@ -43,9 +44,30 @@ function invokeAction({ action, id, name, email, phone }) {
       removeContact(id).then((result) => console.table(result));
       break;
 
+    case "update":
+      updateContact(id, name, phone).then((contact) => {
+        if (!contact) {
+          throw new Error(`Contact with ID ${id} not found`);
+        }
+        console.table(contact);
+      });
+      break;
+
     default:
       console.warn("\x1B[31m Unknown action type!");
   }
 }
 
 invokeAction(argv);
+
+// npm run start:dev
+
+// node index.js --action list
+
+// node index.js --action get --id 6
+
+// node index.js --action remove --id XS5it7Sp5
+
+// node index.js --action add --name Mango --email mango@gmail.com --phone 322-22-22
+
+// node index.js --action update --id XS5it7Sp5 --name Djon  --phone 874-59-17
