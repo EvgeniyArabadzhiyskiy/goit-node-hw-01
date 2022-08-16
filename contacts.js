@@ -36,9 +36,11 @@ async function removeContact(contactId) {
   try {
     const contacts = await listContacts();
 
-    const deletedContact = contacts.filter(
+    const deletedContact = contacts.find(
       (contact) => contact.id === contactId
     );
+
+    if (!deletedContact) return null;
 
     const deletedContactList = contacts.filter(
       (contact) => contact.id !== contactId

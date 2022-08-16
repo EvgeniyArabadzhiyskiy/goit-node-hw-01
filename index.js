@@ -66,7 +66,7 @@ invokeAction(argv);
 
 // node index.js --action get --id 6
 
-// node index.js --action remove --id XS5it7Sp5
+// node index.js --action remove --id Uen1uyD8R
 
 // node index.js --action add --name Mango --email mango@gmail.com --phone 322-22-22
 
