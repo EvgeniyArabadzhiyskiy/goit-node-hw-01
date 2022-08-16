@@ -19,7 +19,7 @@ async function getContactById(contactId) {
     const contacts = await fs.readFile(contactsPath);
     const parsedContacts = JSON.parse(contacts);
 
-    return parsedContacts.filter((contact) => contact.id === String(contactId));
+    return parsedContacts.filter((contact) => contact.id === contactId);
   } catch (error) {
     console.error(error);
   }
@@ -31,11 +31,11 @@ async function removeContact(contactId) {
     const parsedContacts = JSON.parse(contacts);
 
     const deletedContact = parsedContacts.filter(
-      (contact) => contact.id === String(contactId)
+      (contact) => contact.id === contactId
     );
 
     const deletedContactList = parsedContacts.filter(
-      (contact) => contact.id !== String(contactId)
+      (contact) => contact.id !== contactId
     );
 
     const updateContactList = JSON.stringify(deletedContactList);
