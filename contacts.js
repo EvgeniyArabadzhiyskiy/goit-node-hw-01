@@ -19,7 +19,7 @@ async function getContactById(contactId) {
     const contacts = await fs.readFile(contactsPath);
     const parsedContacts = JSON.parse(contacts);
 
-    return parsedContacts.filter((contact) => contact.id === contactId);
+    return parsedContacts.find((contact) => contact.id === contactId);
   } catch (error) {
     console.error(error);
   }
