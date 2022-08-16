@@ -2,11 +2,11 @@ const fs = require("fs").promises;
 const path = require("path");
 const shortid = require("shortid");
 
-const contactsPath = path.resolve("db/contacts.json");
+const contactsPath = path.join(__dirname, "db/contacts.json");
 
 async function listContacts() {
   try {
-    const contacts = await fs.readFile(contactsPath, "utf8");
+    const contacts = await fs.readFile(contactsPath);
 
     return JSON.parse(contacts);
   } catch (error) {
@@ -27,7 +27,7 @@ async function getContactById(contactId) {
 
 async function removeContact(contactId) {
   try {
-    const contacts = await fs.readFile(contactsPath, "utf8");
+    const contacts = await fs.readFile(contactsPath);
     const parsedContacts = JSON.parse(contacts);
 
     const deletedContact = parsedContacts.filter(
@@ -50,7 +50,7 @@ async function removeContact(contactId) {
 
 async function addContact(name, email, phone) {
   try {
-    const contacts = await fs.readFile(contactsPath, "utf8");
+    const contacts = await fs.readFile(contactsPath);
     const parsedContacts = JSON.parse(contacts);
 
     const newContact = {
