@@ -27,7 +27,12 @@ function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case "get":
-      getContactById(id).then((result) => console.table(result));
+      getContactById(id).then((contact) => {
+        if (!contact) {
+          throw new Error(`Contact with ID ${id} not found`);
+        }
+        console.table(contact);
+      });
       break;
 
     case "add":
