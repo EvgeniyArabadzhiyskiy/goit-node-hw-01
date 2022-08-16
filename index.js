@@ -43,4 +43,4 @@ function invokeAction({ action, id, name, email, phone }) {
   }
 }
 
-const result = invokeAction(argv);
+invokeAction(argv);
