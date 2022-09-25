@@ -21,36 +21,38 @@ program.parse(process.argv);
 const argv = program.opts();
 console.log("argv", argv);
 
-function invokeAction({ action, id, name, email, phone }) {
+async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      listContacts().then((result) => console.table(result));
+      const result = await listContacts();
+      console.table(result);
       break;
 
     case "get":
-      getContactById(id).then((contact) => {
-        if (!contact) {
-          throw new Error(`Contact with ID ${id} not found`);
-        }
-        console.table(contact);
-      });
+      const contact = await getContactById(id);
+      if (!contact) {
+        throw new Error(`Contact with ID ${id} not found`);
+      }
+      console.table(contact);
+
       break;
 
     case "add":
-      addContact(name, email, phone).then((result) => console.table(result));
+      const newContact = await addContact(name, email, phone);
+      console.table(newContact);
       break;
 
     case "remove":
-      removeContact(id).then((result) => console.table(result));
+      const deleteContact = await removeContact(id);
+      console.table(deleteContact);
       break;
 
     case "update":
-      updateContact(id, name, phone).then((contact) => {
-        if (!contact) {
-          throw new Error(`Contact with ID ${id} not found`);
-        }
-        console.table(contact);
-      });
+      const changedContact = await updateContact(id, name, phone);
+      if (!changedContact) {
+        throw new Error(`Contact with ID ${id} not found`);
+      }
+      console.table(changedContact);
       break;
 
     default:
