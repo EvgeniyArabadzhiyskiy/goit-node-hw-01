@@ -5,7 +5,7 @@ const shortid = require("shortid");
 const contactsPath = path.join(__dirname, "db/contacts.json");
 
 const updateContactFile = async (updateList) => {
-  fs.writeFile(contactsPath, JSON.stringify(updateList));
+  fs.writeFile(contactsPath, JSON.stringify(updateList, null, 2));
 };
 
 async function listContacts() {
@@ -36,9 +36,7 @@ async function removeContact(contactId) {
   try {
     const contacts = await listContacts();
 
-    const deletedContact = contacts.find(
-      (contact) => contact.id === contactId
-    );
+    const deletedContact = contacts.find((contact) => contact.id === contactId);
 
     if (!deletedContact) return null;
 
